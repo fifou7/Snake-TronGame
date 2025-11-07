@@ -355,6 +355,9 @@ class Bot {
   // Ex: [2, 1]
 
   getMove(arena) {
+    let bestScore = 0;
+    let bestMoves = [];
+
     console.log(this.linkedBike.x);
     console.log(this.linkedBike.y);
     console.log(
@@ -382,32 +385,30 @@ class Bot {
     console.log(moves.length);
 
     // evaluation mouv
-    moves.forEach((move) => {
-      const newX = this.linkedBike.x + move.xMove;
-      const newY = this.linkedBike.y + move.yMove;
+    moves.forEach((getLegalMoves) => {
+      const newX = getLegalMoves.xMove;
+      const newY = getLegalMoves.yMove;
       console.log(newX);
       console.log(newY);
 
       // futur
-      move.score = arena.getAvailableTilesNumber(newX, newY);
+      getLegalMoves.score = arena.getAvailableTilesNumber(newX, newY);
       console.log(arena.getAvailableTilesNumber(newX, newY));
+
+      // bestScore = 0
+      // Vérifier si bestScore < > == getLegalMoves.score
+      // Si bestScore < score -> Je prends ce coup et bestScore devient score
+      // Si bestScore == score -> J'ajoute le coup et je prendrais au hasard
+      // Si bestScore > score -> osef
+
+      if (bestScore < getLegalMoves.score) {
+        bestScore = getLegalMoves.score;
+        bestMoves = [getLegalMoves];
+      } else if (bestScore == getLegalMoves.score) {
+        bestMoves.push(getLegalMoves);
+      }
     });
-
-    //tri
-    moves.sort((a, b) => b.score - a.score);
-    console.log(moves);
-
-    const bestScore = moves[0].score;
-    const bestMoves = moves.filter(
-      (mouvement) => mouvement.score === bestScore
-    );
-
     const chosenMove = bestMoves[Math.floor(Math.random() * bestMoves.length)];
-    console.log(chosenMove);
-
-    console.log(
-      ` Choix final: (${chosenMove.xMove}, ${chosenMove.yMove}) avec score ${chosenMove.score}`
-    );
 
     return [chosenMove.xMove, chosenMove.yMove];
   }

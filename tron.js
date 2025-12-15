@@ -422,15 +422,10 @@ class Fifou {
       }
     }
 
-    //death
-    if (moves.length === 0) {
-      return [0, 0];
-    }
-
-    console.log(moves[0].xMove);
-    console.log(moves[0].yMove);
-
     // only one move possible
+    if (moves.length === 0) {
+      return [this.linkedBike.x + 1, this.linkedBike.y];
+    }
     if (moves.length === 1) {
       return [moves[0].xMove, moves[0].yMove];
     }

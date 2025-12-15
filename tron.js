@@ -58,12 +58,6 @@ class Fifou {
     let bestScore = 0;
     let bestMoves = [];
 
-    console.log(this.linkedBike.x);
-    console.log(this.linkedBike.y);
-    console.log(
-      arena.getLegalMoves(this.linkedBike.x, this.linkedBike.y, false)
-    );
-
     let moves = arena.getLegalMoves(
       this.linkedBike.x,
       this.linkedBike.y,
@@ -85,28 +79,20 @@ class Fifou {
       return [0, 0];
     }
 
-    console.log(moves[0].xMove);
-    console.log(moves[0].yMove);
-
     // only one move possible
     if (moves.length === 1) {
       return [moves[0].xMove, moves[0].yMove];
     }
-    console.log(moves.length);
 
     // evaluation mouv
     moves.forEach((getLegalMoves) => {
       const newX = getLegalMoves.xMove;
       const newY = getLegalMoves.yMove;
-      console.log(newX);
-      console.log(newY);
 
       // scoring
       getLegalMoves.score =
         arena.getAvailableTilesNumber(newX, newY) +
         this.activeMatrix[newX + newY * arena.gridSize];
-
-      console.log(arena.getAvailableTilesNumber(newX, newY));
 
       // bestScore = 0
       // Vérifier si bestScore < > == getLegalMoves.score
